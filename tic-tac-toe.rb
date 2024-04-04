@@ -28,7 +28,7 @@ class TicTacToe
   def start_game
     who_goes_first
     display_board 
-    puts @turn == 1 ? "#{@player1.name}, your move" : "#{@player2.name}, your move"
+    whose_move
   end
   private
   def display_board
@@ -47,6 +47,9 @@ class TicTacToe
       @turn = 2
       puts "#{@player2.name} goes first and is 'X'"
     end
+  end
+  def whose_move
+    puts @turn == 1 ? "#{@player1.name}, your move" : "#{@player2.name}, your move"
   end
 end
 
