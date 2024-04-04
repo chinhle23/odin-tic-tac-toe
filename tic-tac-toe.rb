@@ -5,6 +5,8 @@ class Player
     @name = name
     @mark = ""
   end
+  protected
+
 end
 
 class TicTacToe
@@ -13,22 +15,25 @@ class TicTacToe
     @player1 = player1
     @player2 = player2
     @board = {
-      top_left: "",
-      top_middle: "",
-      top_right: "",
-      middle_left: "",
-      middle_middle: "",
-      middle_right: "",
-      bottom_left: "",
-      bottom_middle: "",
-      bottom_right: ""
+      top_left: "_",
+      top_middle: "_",
+      top_right: "_",
+      middle_left: "_",
+      middle_middle: "_",
+      middle_right: "_",
+      bottom_left: "_",
+      bottom_middle: "_",
+      bottom_right: "_"
     }
+    @open_spots = []
     @turn = 1
   end
   def start_game
     who_goes_first
     display_board 
     whose_move
+    player_move
+    display_board
   end
   private
   def display_board
@@ -51,6 +56,24 @@ class TicTacToe
   def whose_move
     puts @turn == 1 ? "#{@player1.name}, your move" : "#{@player2.name}, your move"
   end
+  def player_move
+    @board.each do |key, value|
+      @open_spots.push(key) if value == "_"
+    end
+    while 1
+      puts "select one of #{@open_spots}"
+      begin
+        move_location = gets.chomp.to_sym
+        p move_location
+        raise if !@open_spots.include?(move_location)
+      rescue
+        puts "Invalid input! Try again..."
+      else
+        @board[move_location] = @turn == 1 ? "X" : "O"
+        break
+      end
+    end
+  end  
 end
 
 jane = Player.new("Jane")
