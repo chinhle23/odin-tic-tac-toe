@@ -10,9 +10,9 @@ class Player
 end
 
 class TicTacToe
-  def initialize(player1, player2)
-    @player1 = player1
-    @player2 = player2
+  def initialize
+    @player1
+    @player2
     @board = {
       11=> "_", 12=> "_", 13=> "_",
       21=> "_", 22=> "_", 23=> "_",
@@ -25,6 +25,10 @@ class TicTacToe
     @turn = 1
   end
   def start_game
+    puts "Enter a name for Player 1"
+    @player1 = Player.new(gets.chomp)
+    puts "Enter a name for Player 2"
+    @player2 = Player.new(gets.chomp)
     who_goes_first
     display_board
     while 1
@@ -132,8 +136,6 @@ class TicTacToe
   end
 end
 
-jane = Player.new("Jane")
-tom = Player.new("Tom")
-game = TicTacToe.new(jane, tom) 
+game = TicTacToe.new
 
 p game.start_game
