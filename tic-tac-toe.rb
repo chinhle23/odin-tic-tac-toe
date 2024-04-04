@@ -10,20 +10,13 @@ class Player
 end
 
 class TicTacToe
-  
   def initialize(player1, player2)
     @player1 = player1
     @player2 = player2
     @board = {
-      top_left: "_",
-      top_middle: "_",
-      top_right: "_",
-      middle_left: "_",
-      middle_middle: "_",
-      middle_right: "_",
-      bottom_left: "_",
-      bottom_middle: "_",
-      bottom_right: "_"
+      11=> "_", 12=> "_", 13=> "_",
+      21=> "_", 22=> "_", 23=> "_",
+      31=> "_", 32=> "_", 33=> "_"
     }
     @open_spots = []
     @board.each do |key, value|
@@ -42,15 +35,17 @@ class TicTacToe
         return "#{@player1.name}(#{@player1.mark}) wins!"
       elsif winner?(@player2.mark)
         return "#{@player2.name}(#{@player2.mark}) wins!"
+      elsif @open_spots.empty?
+        return "Game over. It's a draw!"
       end
     end
   end
   private
   attr_accessor :board
   def display_board
-    puts "#{@board[:top_left]} | #{@board[:top_middle]} | #{@board[:top_right]}"
-    puts "#{@board[:middle_left]} | #{@board[:middle_middle]} | #{@board[:middle_right]}"
-    puts "#{@board[:bottom_left]} | #{@board[:bottom_middle]} | #{@board[:bottom_right]}"
+    puts "#{@board[11]} | #{@board[12]} | #{@board[13]}"
+    puts "#{@board[21]} | #{@board[22]} | #{@board[23]}"
+    puts "#{@board[31]} | #{@board[32]} | #{@board[33]}"
   end
   def who_goes_first
     player = rand(1..2)
@@ -72,9 +67,9 @@ class TicTacToe
   end
   def player_move
     while 1
-      puts "select one of #{@open_spots}"
+      puts "Select a row-column to place your move, available spots: #{@open_spots}"
       begin
-        move_location = gets.chomp.to_sym
+        move_location = gets.chomp.to_i 
         raise if !@open_spots.include?(move_location)
       rescue
         puts "Invalid input! Try again..."
@@ -97,43 +92,43 @@ class TicTacToe
     bottom_diagonal_winner?(mark)
   end 
   def top_row_winner?(mark)
-    @board[:top_left] == mark &&
-    @board[:top_left] == @board[:top_middle] && @board[:top_middle] == @board[:top_right]
+    @board[11] == mark &&
+    @board[11] == @board[12] && @board[12] == @board[13]
   end 
   def middle_row_winner?(mark)
-    @board[:middle_left] == mark &&
-    @board[:middle_left] == @board[:middle_middle] &&
-    @board[:middle_middle] == @board[:middle_right]
+    @board[21] == mark &&
+    @board[21] == @board[22] &&
+    @board[22] == @board[23]
   end 
   def bottom_row_winner?(mark)
-    @board[:bottom_left] == mark &&
-    @board[:bottom_left] == @board[:bottom_middle] &&
-    @board[:bottom_middle] == @board[:bottom_right]
+    @board[31] == mark &&
+    @board[31] == @board[32] &&
+    @board[32] == @board[33]
   end
   def left_column_winner?(mark)
-    @board[:top_left] == mark &&
-    @board[:top_left] == @board[:middle_left] &&
-    @board[:middle_left] == @board[:bottom_left]
+    @board[11] == mark &&
+    @board[11] == @board[21] &&
+    @board[21] == @board[31]
   end
   def middle_column_winner?(mark)
-    @board[:top_middle] == mark &&
-    @board[:top_middle] == @board[:middle_middle] &&
-    @board[:middle_middle] == @board[:bottom_middle]
+    @board[12] == mark &&
+    @board[12] == @board[22] &&
+    @board[22] == @board[32]
   end
   def right_column_winner?(mark)
-    @board[:top_right] == mark &&
-    @board[:top_right] == @board[:middle_right] &&
-    @board[:middle_right] == @board[:bottom_right]
+    @board[13] == mark &&
+    @board[13] == @board[23] &&
+    @board[23] == @board[33]
   end
   def top_diagonal_winner?(mark)
-    @board[:top_left] == mark &&
-    @board[:top_left] == @board[:middle_middle] &&
-    @board[:middle_middle] == @board[:bottom_right]
+    @board[11] == mark &&
+    @board[11] == @board[22] &&
+    @board[22] == @board[33]
   end
   def bottom_diagonal_winner?(mark)
-    @board[:bottom_left] == mark &&
-    @board[:bottom_left] == @board[:middle_middle] &&
-    @board[:middle_middle] == @board[:top_right]
+    @board[31] == mark &&
+    @board[31] == @board[22] &&
+    @board[22] == @board[13]
   end
 end
 
